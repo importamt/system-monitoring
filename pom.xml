@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.eseict</groupId>
+    <artifactId>system-monitoring</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>System monitoring</name>
+    <description>System monitoring library</description>
+
+</project>
