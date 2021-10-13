@@ -1,19 +1,20 @@
-package com.eseict.monitoring;
+package com.eseict.monitoring.impl;
 
+import com.eseict.monitoring.Monitoring;
 import com.eseict.monitoring.checker.Checker;
 import com.eseict.monitoring.scheduler.CheckScheduler;
 
 public class DefaultMonitoring implements Monitoring {
-    private CheckScheduler scheduler = null;
+    private final CheckScheduler scheduler;
+    private final Checker checker;
+
+    public DefaultMonitoring(CheckScheduler scheduler, Checker checker) {
+        this.scheduler = scheduler;
+        this.checker = checker;
+    }
 
     @Override
     public void startMonitoring() {
-        //Create scheduler
-        scheduler = null;
-
-        //Create checker
-        Checker checker = null;
-
         //set checker to scheduler and start Scheduler
         scheduler.startSchedule(checker);
     }

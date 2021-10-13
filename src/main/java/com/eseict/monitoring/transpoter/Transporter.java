@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface Transporter {
     List<System> retrieveSystems();
+
     List<Link> retrieveLinks();
 
     void registerCheckResult(CheckResult checkResult);
