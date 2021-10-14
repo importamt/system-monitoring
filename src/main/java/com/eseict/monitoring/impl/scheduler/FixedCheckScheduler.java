@@ -21,12 +21,12 @@ public class FixedCheckScheduler implements CheckScheduler {
 
         workingThread = new Thread(() -> {
             while (true) {
-
-                new Thread(checker::check).start();
-
                 try {
+
+                    new Thread(checker::check).start();
+
                     Thread.sleep(delay);
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

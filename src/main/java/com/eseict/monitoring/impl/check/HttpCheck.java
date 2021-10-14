@@ -7,15 +7,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 
 public class HttpCheck implements Check {
     private final String uri;
-    private final Logger logger = LoggerFactory.getLogger(HttpCheck.class);
 
     public HttpCheck(String uri) {
         this.uri = uri;
@@ -37,7 +34,8 @@ public class HttpCheck implements Check {
                 return new CheckResult(sourceId + "_" + targetId + "_" + currentTime, sourceId, targetId, "FAIL", new Timestamp(currentTime));
             }
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+//            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             return new CheckResult(sourceId + "_" + targetId + "_" + currentTime, sourceId, targetId, e.getMessage(), new Timestamp(currentTime));
         }
     }
