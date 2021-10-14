@@ -9,6 +9,8 @@ import com.eseict.monitoring.impl.check.HttpCheck;
 import com.eseict.monitoring.transpoter.Transporter;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DefaultChecker implements Checker {
@@ -32,14 +34,21 @@ public class DefaultChecker implements Checker {
         CheckResult selfCheckResult = check.check(systemId, systemId);
         transporter.registerCheckResult(selfCheckResult);
 
+        Map<String, System> systemMap = systems.stream().collect(Collectors.toMap(
+                System::getSystemId,
+                system -> system
+        ));
+
         if (links != null) {
             links.forEach(link -> {
-                String url = systems.stream()
-                        .filter(system -> system.getSystemId().equals(link.getTargetId()))
-                        .findFirst().get().getUrl();
-                HttpCheck httpCheck = new HttpCheck(url);
-                CheckResult checkResult = httpCheck.check(link.getSourceId(), link.getTargetId());
-                transporter.registerCheckResult(checkResult);
+                if( systemMap.containsKey(link.getSourceId()) ) {
+                    System target = systemMap.get(link.getTargetId());
+
+                    HttpCheck httpCheck = new HttpCheck(target.getUrl());
+                    CheckResult checkResult = httpCheck.check(link.getSourceId(), link.getTargetId());
+                    transporter.registerCheckResult(checkResult);
+                }
+
             });
         }
     }
