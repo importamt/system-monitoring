@@ -4,15 +4,15 @@
 
     <groupId>com.eseict</groupId>
     <artifactId>system-monitoring</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -51,15 +51,17 @@
         </dependency>
     </dependencies>
 
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-                <source>15</source>
-                <target>15</target>
-            </configuration>
-        </plugin>
-    </plugins>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>ese releases repository</name>
+            <url>http://210.97.42.246:10053/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>ese snapshot repository</name>
+            <url>http://210.97.42.246:10053/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.Timestamp;
 
 
-public class PidCheck implements Check {
-    private final Logger logger = LoggerFactory.getLogger(PidCheck.class);
+public class PositiveCheck implements Check {
+    private final Logger logger = LoggerFactory.getLogger(PositiveCheck.class);
 
     @Override
     public CheckResult check(String sourceId, String targetId) {
@@ -20,9 +20,6 @@ public class PidCheck implements Check {
                 //PID check: from === to
                 logger.warn("from[{}] is not equals with to[{}]. nothing will happen. just warn you.", sourceId, targetId);
             }
-
-            Long pid = ProcessHandle.current().pid();
-            logger.debug("PidCheck Success : {}", pid);
 
             return new CheckResult(sourceId + "_" + targetId + "_" + currentTime, sourceId, targetId, "SUCCESS", new Timestamp(currentTime));
         } catch (UnsupportedOperationException e) {

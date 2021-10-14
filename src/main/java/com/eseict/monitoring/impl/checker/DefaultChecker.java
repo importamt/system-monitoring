@@ -9,6 +9,7 @@ import com.eseict.monitoring.impl.check.HttpCheck;
 import com.eseict.monitoring.transpoter.Transporter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefaultChecker implements Checker {
     private final String systemId;
@@ -33,7 +34,10 @@ public class DefaultChecker implements Checker {
 
         if (links != null) {
             links.forEach(link -> {
-                HttpCheck httpCheck = new HttpCheck(link.getLinkId());
+                String url = systems.stream()
+                        .filter(system -> system.getSystemId().equals(link.getTargetId()))
+                        .findFirst().get().getUrl();
+                HttpCheck httpCheck = new HttpCheck(url);
                 CheckResult checkResult = httpCheck.check(link.getSourceId(), link.getTargetId());
                 transporter.registerCheckResult(checkResult);
             });

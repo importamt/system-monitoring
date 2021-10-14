@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 public class FixedCheckScheduler implements CheckScheduler {
 
-    private int delay = 10000;
+    private int delay = 30000;
     private int initialDelay = 0;
     private Timer timer;
     private TimerTask timerTask;

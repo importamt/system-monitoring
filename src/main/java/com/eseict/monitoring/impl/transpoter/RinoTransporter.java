@@ -47,7 +47,7 @@ public class RinoTransporter implements Transporter {
         HttpGet httpGet = new HttpGet(omsUrl + "api/monitoring/systems");
         try (CloseableHttpResponse response = client.execute(httpGet)) {
             String responseText = EntityUtils.toString(response.getEntity());
-            List<System> systems = objectMapper.readValue(responseText, new TypeReference<>() {
+            List<System> systems = objectMapper.readValue(responseText, new TypeReference<List<System>>() {
             });
             return systems;
         } catch (IOException e) {
@@ -62,7 +62,7 @@ public class RinoTransporter implements Transporter {
         HttpGet httpGet = new HttpGet(omsUrl + "api/monitoring/links");
         try (CloseableHttpResponse response = client.execute(httpGet)) {
             String responseText = EntityUtils.toString(response.getEntity());
-            List<Link> links = objectMapper.readValue(responseText, new TypeReference<>() {
+            List<Link> links = objectMapper.readValue(responseText, new TypeReference<List<Link>>() {
             });
             return links;
         } catch (IOException e) {

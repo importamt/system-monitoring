@@ -32,13 +32,14 @@ public class Monitorings {
             String systemKey,
             String secret,
             Check selfCheck,
-            String omsUrl
+            String omsUrl,
+            int delay
     ) {
         MonitoringBuilder monitoringBuilder = MonitoringBuilder.create();
         RinoTransporter rinoTransporter = new RinoTransporter(omsUrl, systemKey, secret);
         monitoringBuilder
                 .setChecker(new DefaultChecker(systemId, selfCheck, rinoTransporter))
-                .setCheckerScheduler(new FixedCheckScheduler());
+                .setCheckerScheduler(new FixedCheckScheduler(delay));
 
         return monitoringBuilder.build();
     }
