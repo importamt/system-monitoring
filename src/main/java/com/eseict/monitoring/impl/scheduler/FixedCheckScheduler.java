@@ -34,7 +34,7 @@ public class FixedCheckScheduler implements CheckScheduler {
             }
         };
 
-        timer = new Timer(true);
+        timer = new Timer(false);
         timer.scheduleAtFixedRate(timerTask, initialDelay, delay);
     }
 
