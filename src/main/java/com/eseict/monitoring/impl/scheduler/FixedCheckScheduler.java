@@ -3,15 +3,11 @@ package com.eseict.monitoring.impl.scheduler;
 import com.eseict.monitoring.checker.Checker;
 import com.eseict.monitoring.scheduler.CheckScheduler;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class FixedCheckScheduler implements CheckScheduler {
 
     private int delay = 30000;
-    private int initialDelay = 0;
-    private Timer timer;
-    private TimerTask timerTask;
+
+    private Thread workingThread;
 
     public FixedCheckScheduler() {
     }
@@ -20,26 +16,28 @@ public class FixedCheckScheduler implements CheckScheduler {
         this.delay = delay;
     }
 
-    public FixedCheckScheduler(int delay, int initialDelay) {
-        this.delay = delay;
-        this.initialDelay = initialDelay;
-    }
-
     @Override
     public void startSchedule(Checker checker) {
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                checker.check();
-            }
-        };
 
-        timer = new Timer(false);
-        timer.scheduleAtFixedRate(timerTask, initialDelay, delay);
+        workingThread = new Thread(() -> {
+            while (true) {
+
+                new Thread(checker::check).start();
+
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        workingThread.setName("system-monitoring-thread");
+        workingThread.start();
     }
 
     @Override
     public void stopSchedule() {
-        timer.cancel();
+
+        workingThread.interrupt();
     }
 }
