@@ -41,7 +41,7 @@ public class DefaultChecker implements Checker {
 
         if (links != null) {
             links.forEach(link -> {
-                if( systemMap.containsKey(link.getSourceId()) ) {
+                if( systemId.equals(link.getSourceId()) ) {
                     System target = systemMap.get(link.getTargetId());
 
                     HttpCheck httpCheck = new HttpCheck(target.getUrl());
